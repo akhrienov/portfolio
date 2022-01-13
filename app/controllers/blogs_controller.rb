@@ -1,13 +1,17 @@
 class BlogsController < ApplicationController
   before_action :set_blog, only: %i[ show edit update destroy toggle_status ]
+  layout "blog"
+  access all: [:show, :index], user: {except: [:new, :create, :update, :edit, :destroy]}, site_admin: :all
 
   # GET /blogs or /blogs.json
   def index
     @blogs = Blog.all
+    @website_title = "Artem Khrienov | My Blog Posts"
   end
 
   # GET /blogs/1 or /blogs/1.json
   def show
+    @website_title = @blog.title
   end
 
   # GET /blogs/new
